@@ -13,22 +13,21 @@ import {
 } from "./js/render-functions";
 
 const getForm = document.querySelector(".form");
-const getGallery = document.querySelector(".gallery");
 const getLoadMoreBtn = document.querySelector(".load-more");
 
-let page = 1;
 let searchQuery = "";
+let page = 1;
 
 getForm.addEventListener("submit", async event => {
   event.preventDefault();
 
-  const getQuery = event.target.elements["search-text"].value.trim();
+  const query = event.target.elements["search-text"].value.trim();
 
-  if (!getQuery) {
+  if (!query) {
     return;
   }
 
-  searchQuery = getQuery;
+  searchQuery = query;
   page = 1;
 
   clearGallery();
@@ -96,14 +95,16 @@ getLoadMoreBtn.addEventListener("click", async () => {
       });
     }
 
-    const getGalleryItem = document.querySelector(".gallery-item");
+    const galleryItem = document.querySelector(".gallery-item");
 
-    const cardHeight = getGalleryItem.getBoundingClientRect().height;
+    if (galleryItem) {
+      const cardHeight = galleryItem.getBoundingClientRect().height;
 
-    window.scrollBy({
-      top: cardHeight * 2,
-      behavior: "smooth",
-    });
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: "smooth",
+      });
+    }
   } catch (error) {
     iziToast.error({
       message: "Something went wrong. Please try again!",
